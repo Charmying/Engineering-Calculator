@@ -1,0 +1,161 @@
+@import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
+
+body {
+    font-family: 'Noto Sans TC',sans-serif !important;
+    cursor: default;
+    user-select: none;
+}
+
+.calculator {
+    width: 100%;
+    max-width: 250px;
+    margin: 5rem auto;
+    padding: 1.5rem 1rem 2rem;
+    border: 3px #000000 solid;
+    position: relative;
+}
+
+.clear {
+    font-size: 22px;
+    position: absolute;
+    top: 2%;
+    right: 7.5%;
+    cursor: pointer;
+    transform: rotate(0deg);
+    transition: all .5s linear;
+}
+
+.clear:hover {
+    transform: rotate(10800deg);
+}
+
+.remark input {
+    width: 220px;
+    display: block;
+    margin: auto;
+    padding: 5px;
+    border: 1px red solid
+}
+
+.remark input:focus-visible {
+    outline: 1px auto blue; /* 蓋預設 outline */
+} 
+
+.keyin {
+    margin: 1.5rem auto;
+}
+
+.keyin h1 {
+    font-size: 20px;
+    font-weight: 900;
+    text-align: center;
+    padding: 0.5rem 0 2.5rem;
+}
+
+.keyin p {
+    font-size: 15px;
+    font-weight: 700;
+    width: 230px;
+    /* height: 15px;
+    line-height: 15px; */
+    /* height: 40px;
+    line-height: 20px; */
+    line-height: 20px;
+    margin: auto;
+    border: 2px #000000 solid;
+    border-radius: 5px;
+    padding: 5px;
+    letter-spacing: 0.75px;
+    word-wrap:break-word;
+}
+
+.keyin .formula {
+    margin: 1.5rem auto;
+}
+
+.keyin input {
+    width: 220px;
+    display: block;
+    margin: auto;
+    padding: 5px;
+    /* border: 1px red solid */
+}
+
+.keyin input:focus-visible {
+    outline: 1px auto blue; /* 蓋預設 outline */
+} 
+
+.btns {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 5px;
+}
+
+button {
+    font-family: 'Noto Sans TC',sans-serif;
+    font-size: 12px;
+    width: 100%;
+    padding: 1rem 0.25rem;
+    border: 0;
+    border-radius: 5px;
+    color: #FFFFFF;
+    background-color: #000000;
+    transform: scale(1);
+    transition: all 0.1s linear;
+    cursor: pointer;
+}
+
+button:hover {
+    color: #000000;
+    background-color: #FFFFFF;
+}
+
+button:active {
+    color: #FFFFFF;
+    background-color: #000000;
+    transform: scale(0.8);
+}
+
+.equal {
+    grid-template-columns: repeat(1, 1fr);
+    margin-top: 0.5rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

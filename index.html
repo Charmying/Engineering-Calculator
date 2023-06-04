@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="https://unpkg.com/vue@next"></script>
+    <title>Calculator</title>
+</head>
+<body>
+    <div id="app">
+        <section>
+            <div class="calculator">
+                <div class="clear" @click="clear">✖</div>
+                <div class="keyin">
+                    <h1> {{ title }} </h1>
+                    <p class="keyin">Keyin: {{ keyin }}</p>
+                    <p class="formula">Formula: {{ formula }}</p>
+                    <p class="result">Ans: {{ result }}</p>
+                </div>
+                <div class="btns">
+                    <button @click="del">DEL</button>
+                    <button @click="log('log')">logₓ(y)</button>
+                    <button @click="NaturalLogarithm('ln(')">ln</button>
+                    <button @click="clear">AC</button>
+                    <button @click="angle('°')">°</button>
+                    <button @click="factorial('!')">x!</button>
+                    <button @click="exponential('e')">e</button>
+                    <button @click="power('^')">^</button>
+                    <button @click="triFunction('sec(')">sec</button>
+                    <button @click="triFunction('csc(')">csc</button>
+                    <button @click="triFunction('cot(')">cot</button>
+                    <button @click="cubeRoot('³√(')">³√</button>
+                    <button @click="triFunction('sin(')">sin</button>
+                    <button @click="triFunction('cos(')">cos</button>
+                    <button @click="triFunction('tan(')">tan</button>
+                    <button @click="squareRoot('√(')">√</button>
+                    <button @click="brackets('(')">(</button>
+                    <button @click="brackets(')')">)</button>
+                    <button @click="pi('π')">π</button>
+                    <button @click="percentage('%')">%</button>
+                    <!-- <button v-for="num in 9" :key="num" @click="keyNumber(num)"> {{ num }} </button> -->
+                    <button @click="keyNumber(7)">7</button>
+                    <button @click="keyNumber(8)">8</button>
+                    <button @click="keyNumber(9)">9</button>
+                    <button @click="arithmetic('÷')">÷</button>
+                    <button @click="keyNumber(4)">4</button>
+                    <button @click="keyNumber(5)">5</button>
+                    <button @click="keyNumber(6)">6</button>
+                    <button @click="arithmetic('×')">×</button>
+                    <button @click="keyNumber(1)">1</button>
+                    <button @click="keyNumber(2)">2</button>
+                    <button @click="keyNumber(3)">3</button>
+                    <button @click="arithmetic('-')">-</button>
+                    <button @click="keyNumber(0)">0</button>
+                    <button @click="keyDot('.')">.</button>
+                    <button @click="ans">Ans</button>
+                    <button @click="arithmetic('+')">+</button>
+                </div>
+                <div class="equal">
+                    <button @click="equal">=</button>
+                </div>
+                
+            </div>
+        </section>
+    </div>
+    <script>
+        const { ref, onMounted } = Vue;
+        const App = {
+            el: '#app',
+            setup() {
+                const title = ref("");
+                const formula = ref("");
+                const keyin = ref("");
+                const result = ref(0);
+
+                const keyNumber = (number) => {
+                    if (keyin.value === "0" && number === 0) {
+                        return;
+                    } else if (keyin.value === "0" && number !== 0) {
+                        keyin.value = "";
+                    }
+                    keyin.value += number;
+                }
+
+                const keyDot = (keyDot) => {
+                    keyin.value += keyDot;
+                }
+
+                const arithmetic = (arithmetic) => {
+                    keyin.value += arithmetic;
+                }
+
+                const brackets = (brackets) => {
+                    keyin.value += brackets;
+                }
+
+                const pi = (pi) => {
+                    keyin.value += pi;
+                }
+
+                const percentage = (percentage) => {
+                    keyin.value += percentage;
+                }
+
+                const power = (power) => {
+                    keyin.value += power;
+                }
+
+                const log = (log) => {
+                    keyin.value += log;
+                }
+
+                const exponential = (exponential) => {
+                    keyin.value += exponential;
+                }
+
+                const NaturalLogarithm = (NaturalLogarithm) => {
+                    keyin.value += NaturalLogarithm;
+                }
+
+                const squareRoot = (squareRoot) => {
+                    keyin.value += squareRoot;
+                }
+
+                const cubeRoot = (cubeRoot) => {
+                    keyin.value += cubeRoot;
+                }
+
+                const triFunction = (tri) => {
+                    keyin.value += tri;
+                }
+
+                const angle = (angle) => {
+                    keyin.value += angle;
+                }
+
+                const factorial = (factorial) => {
+                    keyin.value += factorial;
+                }
+
+                const equal = () => {
+                    try {
+                        const convertArithmetic = keyin.value.replace(/×/g, "*").replace(/÷/g, "/");
+                        
+                        function processBrackets(expression) {
+                            const updatedExpression = expression.replace(/\)\(/g, ')*(');
+                            return updatedExpression;
+                        }
+                        const processedBrackets = processBrackets(convertArithmetic);
+
+                        const percentageRegex = /(\d+)%/g;
+                        const calculatePercentage = processedBrackets.replace(percentageRegex, function(match, p1) {
+                            const percentage = parseFloat(p1) / 100;
+                            return percentage.toString();
+                        });
+
+                        const factorialRegex = /(\d+)!/g;
+                        const calculateFactorial = calculatePercentage.replace(factorialRegex, function(match, p1) {
+                            function factorial(n) {
+                                let result = 1;
+                                for (let i = 2; i <= n; i++) {
+                                    result *= i;
+                                }
+                                return result;
+                            }
+                            const result = factorial(p1);
+                            return result.toString();
+                        });
+
+                        const convertPower = calculateFactorial.replace("^", "**");
+
+                        const logRegex = convertPower.replace(/(\d+)log/g, "$1 * log");
+                        console.log("log 前面加上 *：", logRegex);
+                        function convertLogExpression(expression) {
+                            let regex = /log([0-9.]+)\(([^\)]+)\)/g;
+                            let result = expression.replace(regex, function(match, base, argument) {
+                                return '(Math.log(' + argument + ')) / Math.log((' + base + '))';
+                            });
+                            return result;
+                        }
+                        const convertLogFormula = convertLogExpression(logRegex);
+
+                        function processLeftBracket(expression) {
+                            const pattern = /log(\d+)/;
+                            const matches = convertPower.match(pattern);
+                            if (matches) {
+                              const x = matches[1];
+                              console.log(x);
+                            }
+                            const isLog = pattern.test(convertPower);
+                            console.log(isLog);
+                            if (isLog == true) {
+                                // return
+                                return convertLogFormula;
+                            } else if (isLog == false) {
+                                const constantRegex = /^\s*(\d+(\.\d+)?|π)\s*$/;
+                                const processLeftBracket = expression.replace(/\(/g, (match, offset) => {
+                                    const previousChar = expression[offset - 1];
+                                    if (previousChar.match(/[π0123456789]/)) {
+                                        return "*(";
+                                    }
+                                    return match;
+                                });
+                                return processLeftBracket;
+                            }
+                        }
+                        const processedLeftBracket = processLeftBracket(convertLogFormula);
+
+                        function addMultiply(expression) {
+                            let regex = /(\d+(\.\d+)?)(π|√|sin|cos|tan|cot|sec|csc|e|ln|log)/g;
+                            let result = expression.replace(regex, "$1 * $3");
+                            return result;
+                        }
+                        const addMultiplyFormula = addMultiply(processedLeftBracket);
+                        
+                        const addMultiplyRegex = addMultiplyFormula.replace(/([π√sinctancotseccscelnlog])([π\d.])/g, function(match, p1, p2) {
+                            return p1 + '*' + p2;
+                        });
+
+                        const addTimesRegex = addMultiplyRegex.replace(/(π)(√)/g, "$1 * $2");
+
+                        function processCubeRoot(expression) {
+                            let processCubeRoot = expression.replace(/(\d+)³√/g, "$1*Math.cbrt");
+                            processCubeRoot = processCubeRoot.replace(/!(³√)/g, "!*Math.cbrt");
+                            processCubeRoot = processCubeRoot.replace(/π(³√)/g, "π*Math.cbrt");
+                            processCubeRoot = processCubeRoot.replace(/°(³√)/g, "π*Math.cbrt");
+                            processCubeRoot = processCubeRoot.replace(/\)(³√)/g, ")*Math.cbrt");
+                            processCubeRoot = processCubeRoot.replace(/³√/, "Math.cbrt");
+                            return processCubeRoot
+                        }
+                        const processedCubeRoot = processCubeRoot(addTimesRegex);
+
+                        const convertAngle = processedCubeRoot.replace(/(\d+)°/g, "$1*Math.PI/180");
+
+                        function replaceOperator(operator) {
+                            switch (operator) {
+                                case "π":
+                                    return Math.PI;
+                                case "√":
+                                    return "Math.sqrt";
+                                case "sin":
+                                    return "Math.sin";
+                                case "cos":
+                                    return "Math.cos";
+                                case "tan":
+                                    return "Math.tan";
+                                case "cot":
+                                    return "1 / Math.tan";
+                                case "sec":
+                                    return "1 / Math.cos";
+                                case "csc":
+                                    return "1 / Math.sin";
+                                case "e":
+                                    return "Math.E";
+                                case "ln":
+                                    return "Math.log";
+                                default:
+                                    return operator;
+                            }
+                        }
+                        const convertFormula = convertAngle.replace(/π|√|sin|cos|tan|cot|sec|csc|e|ln/g, replaceOperator);
+
+                        const roughAnswer = eval(convertFormula);
+                        const preciseAnswer = parseFloat(roughAnswer).toPrecision(12);
+                        const answer = parseFloat(preciseAnswer);
+
+                        formula.value = keyin.value;
+                        result.value = answer;
+                        keyin.value = "";
+                    }
+                    catch (error) {
+                        keyin.value = "";
+                        formula.value = "ERROR";
+                        result.value = "ERROR";
+                    }
+                }
+
+                const ans = () => {
+                    if (formula.value === "") {
+                        return;
+                    }
+                    keyin.value += result.value;
+                }
+
+                const del = () => {
+                    keyin.value = keyin.value.slice(0, -1);
+                };
+
+                const clear = () => {
+                    keyin.value = "";
+                    formula.value = "";
+                    result.value = 0;
+                }
+
+                const showTitle = () => {
+                    const originalTitle = "Engineering Calculator";
+                    let index = 0;
+                    const intervalId = setInterval(() => {
+                        title.value += originalTitle[index];
+                        index++;
+                        if (index === originalTitle.length) {
+                            clearInterval(intervalId);
+                        }
+                    }, 100)
+                }
+
+                onMounted(() => {
+                    showTitle();
+                })
+
+                return {
+                    title,
+                    keyin,
+                    formula,
+                    result,
+
+                    keyNumber,
+                    keyDot,
+                    arithmetic,
+                    pi,
+                    percentage,
+                    power,
+                    log,
+                    exponential,
+                    NaturalLogarithm,
+                    brackets,
+                    squareRoot,
+                    cubeRoot,
+                    triFunction,
+                    angle,
+                    factorial,
+                    equal,
+                    ans,
+                    del,
+                    clear,
+                    
+                    showTitle,
+                };
+            }
+        };
+        Vue.createApp(App).mount('#app');
+    </script>
+</body>
+</html>
