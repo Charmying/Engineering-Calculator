@@ -56,10 +56,6 @@ body {
     font-size: 15px;
     font-weight: 700;
     width: 230px;
-    /* height: 15px;
-    line-height: 15px; */
-    /* height: 40px;
-    line-height: 20px; */
     line-height: 20px;
     margin: auto;
     border: 2px #000000 solid;
@@ -78,7 +74,6 @@ body {
     display: block;
     margin: auto;
     padding: 5px;
-    /* border: 1px red solid */
 }
 
 .keyin input:focus-visible {
@@ -113,49 +108,16 @@ button:hover {
 button:active {
     color: #FFFFFF;
     background-color: #000000;
-    transform: scale(0.8);
+    animation: buttonClick 1s linear;
+}
+
+@keyframes buttonClick {
+    0% {transform: scale(1);}
+    50% {transform: scale(0.8);}
+    1000% {transform: scale(1);}
 }
 
 .equal {
     grid-template-columns: repeat(1, 1fr);
     margin-top: 0.5rem;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
